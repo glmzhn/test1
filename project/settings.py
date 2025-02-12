@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'rates',
 ]
 
 MIDDLEWARE = [
@@ -142,13 +144,20 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# CACHES
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": "redis://redis:6379/1",
+    }
+}
+
 # CELERY
 CELERY_BROKER_URL = config('CELERY_BROKER_URL')
 
-
-# CELERY_BEAT_SCHEDULE = {
-#     'every_10_seconds': {
-#         'task': 'rate_app.tasks.course_rate',
-#         'schedule': timedelta(seconds=10),
-#     },
-# }
+CELERY_BEAT_SCHEDULE = {
+    "fetch_exchange_rate": {
+        "task": "rates.tasks.fetch_exchange_rate",
+        "schedule": 60.0,
+    },
+}

@@ -47,5 +47,6 @@ tzdata==2024.1
 vine==5.1.0
 wcwidth==0.2.13
 zope.interface==7.0.3
+django_redis==1.5.2
 requests
 djangorestframework

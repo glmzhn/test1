@@ -2,6 +2,8 @@ services:
   web:
     build: .
     entrypoint: /home/app/web/entrypoint.sh
+    ports:
+      - "8000:8000"
     expose:
       - 8000
     volumes:
